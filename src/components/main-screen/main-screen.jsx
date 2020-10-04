@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Main = (props) => {
+const MainScreen = (props) => {
   const {rentCount} = props;
 
   return (
@@ -380,8 +380,8 @@ const Main = (props) => {
   );
 };
 
-Main.propTypes = {
+MainScreen.propTypes = {
   rentCount: PropTypes.number.isRequired,
 };
 
-export default Main;
+export default MainScreen;
