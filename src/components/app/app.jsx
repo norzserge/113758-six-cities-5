@@ -1,19 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import MainScreen from '../main-screen/main-screen';
 import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import PropertyScreen from '../property-screen/property-screen';
+import {appType} from './appType';
 
 const App = (props) => {
-  const {rentCount} = props;
+  const {rentCount, offers, reviews} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainScreen rentCount={rentCount} />
+          <MainScreen rentCount={rentCount} offers={offers} />
         </Route>
         <Route exact path="/login">
           <LoginScreen />
@@ -22,15 +22,17 @@ const App = (props) => {
           <FavoritesScreen />
         </Route>
         <Route exact path="/offer/:id">
-          <PropertyScreen />
+          <PropertyScreen
+            property={offers[0]}
+            reviews={reviews[0]}
+            offers={offers}
+          />
         </Route>
       </Switch>
     </BrowserRouter>
   );
 };
 
-App.propTypes = {
-  rentCount: PropTypes.number.isRequired,
-};
+App.propTypes = appType;
 
 export default App;
