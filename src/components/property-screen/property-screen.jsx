@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import PlaceList from '../place-list/place-list';
 import AddReviewForm from '../add-review-form/add-review-form';
-import {propertyScreenType} from './propertyScreenType';
+import {propertyScreenType} from './property-screen-type';
 
 class PropertyScreen extends PureComponent {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PlaceList from '../place-list/place-list';
-import {mainScreenType} from './mainScreenType';
+import {mainScreenType} from './main-screen-type';
 
 const MainScreen = (props) => {
   const {rentCount, offers} = props;

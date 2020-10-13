@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {Link} from 'react-router-dom';
-import {placeCardType} from './placeCardType';
+import {placeCardType} from './place-card-type';
 
 class PlaceCard extends PureComponent {
   constructor(props) {

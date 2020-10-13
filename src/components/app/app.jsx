@@ -4,7 +4,7 @@ import MainScreen from '../main-screen/main-screen';
 import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import PropertyScreen from '../property-screen/property-screen';
-import {appType} from './appType';
+import {appType} from './app-type';
 
 const App = (props) => {
   const {rentCount, offers, reviews} = props;
