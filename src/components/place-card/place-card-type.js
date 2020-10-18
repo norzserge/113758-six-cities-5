@@ -12,6 +12,7 @@ export const placeCardType = {
     photo: PropTypes.string.isRequired,
     bedroomCount: PropTypes.number.isRequired,
     maxAdults: PropTypes.number.isRequired,
+    coordinate: PropTypes.arrayOf(PropTypes.number).isRequired,
     insideRoom: PropTypes.arrayOf(PropTypes.string).isRequired,
     owner: PropTypes.shape({
       photo: PropTypes.string.isRequired,
