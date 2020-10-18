@@ -11,6 +11,7 @@ export default [
     photo: `/img/apartment-01.jpg`,
     bedroomCount: 3,
     maxAdults: 4,
+    coordinate: [52.3909553943508, 4.85309666406198],
     insideRoom: [
       `Wi-Fi`,
       `Heating`,
@@ -43,6 +44,7 @@ export default [
     photo: `/img/apartment-02.jpg`,
     bedroomCount: 4,
     maxAdults: 5,
+    coordinate: [52.369553943508, 4.85309666406198],
     insideRoom: [
       `Wi-Fi`,
       `Heating`,
@@ -69,6 +71,7 @@ export default [
     photo: `/img/room.jpg`,
     bedroomCount: 2,
     maxAdults: 3,
+    coordinate: [52.3909553943508, 4.929309666406198],
     insideRoom: [
       `Wi-Fi`,
       `Kitchen`,
@@ -97,6 +100,7 @@ export default [
     photo: `/img/studio-01.jpg`,
     bedroomCount: 1,
     maxAdults: 2,
+    coordinate: [52.3809553943508, 4.939309666406198],
     insideRoom: [
       `Wi-Fi`,
       `Heating`,

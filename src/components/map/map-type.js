@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 
-export const placeCardType = {
-  onPlace: PropTypes.func.isRequired,
-  place: PropTypes.shape({
+export const mapType = {
+  offers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
@@ -19,5 +18,5 @@ export const placeCardType = {
       name: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
     }).isRequired,
-  }).isRequired,
+  }).isRequired).isRequired,
 };
