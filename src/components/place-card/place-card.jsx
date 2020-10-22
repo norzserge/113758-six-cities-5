@@ -6,11 +6,20 @@ class PlaceCard extends PureComponent {
   constructor(props) {
     super(props);
   }
+
   render() {
-    const {onPlace, place} = this.props;
+    const {onPlace, place, className} = this.props;
+    const setArticleClassName = (classname) => {
+      switch (classname) {
+        case `near-places`: return `near-places__card`;
+        case `cities`: return `cities__place-card`;
+        default: return `default`;
+      }
+    };
+
     return (
       <article
-        className="cities__place-card place-card"
+        className={`${setArticleClassName(className)} place-card`}
         onMouseEnter={() => {
           onPlace(place);
         }}
@@ -20,7 +29,7 @@ class PlaceCard extends PureComponent {
             <span>Premium</span>
           </div>
         )}
-        <div className="cities__image-wrapper place-card__image-wrapper">
+        <div className={`${className}__image-wrapper place-card__image-wrapper`}>
           <Link to='/offer/1'>
             <img className="place-card__image" src={place.photo} width="260" height="200" alt="Place image" />
           </Link>

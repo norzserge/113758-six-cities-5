@@ -1,6 +1,8 @@
 import React, {PureComponent} from 'react';
 import {placeListType} from './placeListType';
 import PlaceCard from '../place-card/place-card';
+import PlaceCardCities from '../../proxy-components/place-card-cities/place-card-cities';
+import PlaceCardNear from '../../proxy-components/place-card-near/place-card-near';
 
 class PlaceList extends PureComponent {
   constructor(props) {
@@ -11,14 +13,30 @@ class PlaceList extends PureComponent {
     };
   }
   render() {
-    const {offers} = this.props;
+    const {offers, type} = this.props;
+
     const setCurrentPlace = (place) => {
       this.setState({
         currentPlace: place,
       });
     };
 
-    return <>{offers.map((offer) => <PlaceCard place={offer} key={offer.title} onPlace={setCurrentPlace} />)}</>;
+    const getPlaceCardByType = (placeType, offer) => {
+      switch (placeType) {
+        case `cities`:
+          return (<PlaceCardCities place={offer} key={offer.title} onPlace={setCurrentPlace} />);
+        case `near`:
+          return (<PlaceCardNear place={offer} key={offer.title} onPlace={setCurrentPlace} />);
+        default:
+          return (<PlaceCard place={offer} key={offer.title} onPlace={setCurrentPlace} />);
+      }
+    };
+
+    return (
+      <>
+        {offers.map((offer) => getPlaceCardByType(type, offer))}
+      </>
+    );
   }
 }
 
