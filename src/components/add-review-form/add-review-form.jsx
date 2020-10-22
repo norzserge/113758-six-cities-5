@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {PureComponent, Fragment} from 'react';
 
 const ratingStarsData = [
   {
@@ -44,14 +44,26 @@ class AddReviewForm extends PureComponent {
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
           {
-            ratingStarsData.map((star) => (<>
-              <input onClick={setStarsCount} className="form__rating-input visually-hidden" name="rating" value={star.value} id={`${star.value}-stars`} type="radio" />
-              <label htmlFor={`${star.value}-stars`} className="reviews__rating-label form__rating-label" title={star.title}>
-                <svg className="form__star-image" width="37" height="33">
-                  <use xlinkHref="#icon-star" />
-                </svg>
-              </label>
-            </>))
+            ratingStarsData.map((star) => (
+              <Fragment key={star.value}>
+                <input
+                  onClick={setStarsCount}
+                  className="form__rating-input visually-hidden"
+                  name="rating" value={star.value}
+                  id={`${star.value}-stars`}
+                  type="radio"
+                />
+                <label
+                  htmlFor={`${star.value}-stars`}
+                  className="reviews__rating-label form__rating-label"
+                  title={star.title}
+                >
+                  <svg className="form__star-image" width="37" height="33">
+                    <use xlinkHref="#icon-star" />
+                  </svg>
+                </label>
+              </Fragment>
+            ))
           }
         </div>
         <textarea onChange={addReview} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
