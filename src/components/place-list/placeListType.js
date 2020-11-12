@@ -1,5 +1,9 @@
 import PropTypes from 'prop-types';
 
 export const placeListType = {
-  offers: PropTypes.array.isRequired,
+  currentCityData: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  })).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  type: PropTypes.string.isRequired,
 };

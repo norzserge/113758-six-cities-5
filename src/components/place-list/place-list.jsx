@@ -1,45 +1,40 @@
-import React, {PureComponent} from 'react';
+import React, {useState} from 'react';
 import {placeListType} from './placeListType';
 import PlaceCard from '../place-card/place-card';
 import PlaceCardCities from '../../proxy-components/place-card-cities/place-card-cities';
 import PlaceCardNear from '../../proxy-components/place-card-near/place-card-near';
+import {connect} from 'react-redux';
 
-class PlaceList extends PureComponent {
-  constructor(props) {
-    super(props);
+const PlaceList = (props) => {
+  const {
+    type,
+    currentCityData,
+    isLoading,
+  } = props;
 
-    this.state = {
-      currentPlace: this.props.offers[0],
-    };
-  }
-  render() {
-    const {offers, type} = this.props;
+  const [currentPlace, setCurrentPlace] = useState({});
 
-    const setCurrentPlace = (place) => {
-      this.setState({
-        currentPlace: place,
-      });
-    };
+  const getPlaceCardByType = (placeType, offer) => {
+    switch (placeType) {
+      case `cities`:
+        return (<PlaceCardCities place={offer} key={offer.id} onPlace={(offer) => setCurrentPlace(offer)} />);
+      case `near`:
+        return (<PlaceCardNear place={offer} key={offer.id} onPlace={(offer) => setCurrentPlace(offer)} />);
+      default:
+        return (<PlaceCard place={offer} key={offer.id} onPlace={(offer) => setCurrentPlace(offer)} />);
+    }
+  };
 
-    const getPlaceCardByType = (placeType, offer) => {
-      switch (placeType) {
-        case `cities`:
-          return (<PlaceCardCities place={offer} key={offer.title} onPlace={setCurrentPlace} />);
-        case `near`:
-          return (<PlaceCardNear place={offer} key={offer.title} onPlace={setCurrentPlace} />);
-        default:
-          return (<PlaceCard place={offer} key={offer.title} onPlace={setCurrentPlace} />);
-      }
-    };
-
-    return (
-      <>
-        {offers.map((offer) => getPlaceCardByType(type, offer))}
-      </>
-    );
-  }
+  return isLoading ? 'Loading...' : currentCityData.map((offer) => getPlaceCardByType(type, offer));
 }
 
 PlaceList.propTypes = placeListType;
 
-export default PlaceList;
+const mapStateToProps = (state) => ({
+  currentCityData: state.currentCityData,
+  isLoading: state.isLoading,
+});
+
+export {PlaceList};
+
+export default connect(mapStateToProps)(PlaceList);

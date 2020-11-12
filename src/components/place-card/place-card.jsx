@@ -20,18 +20,16 @@ class PlaceCard extends PureComponent {
     return (
       <article
         className={`${setArticleClassName(className)} place-card`}
-        onMouseEnter={() => {
-          onPlace(place);
-        }}
+        onMouseEnter={() => onPlace(place)}
       >
-        {place.isPremium && (
+        {place.is_premium && (
           <div className="place-card__mark">
             <span>Premium</span>
           </div>
         )}
         <div className={`${className}__image-wrapper place-card__image-wrapper`}>
           <Link to='/offer/1'>
-            <img className="place-card__image" src={place.photo} width="260" height="200" alt="Place image" />
+            <img className="place-card__image" src={place.preview_image} width="260" height="200" alt="Place image" />
           </Link>
         </div>
         <div className="place-card__info">
@@ -56,7 +54,7 @@ class PlaceCard extends PureComponent {
           <h2 className="place-card__name">
             <a href="#">{place.title}</a>
           </h2>
-          <p className="place-card__type">{place.roomType}</p>
+          <p className="place-card__type">{place.type}</p>
         </div>
       </article>
     );

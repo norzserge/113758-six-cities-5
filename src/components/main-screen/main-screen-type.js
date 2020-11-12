@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 
 export const mainScreenType = {
-  rentCount: PropTypes.number.isRequired,
-  offers: PropTypes.array.isRequired,
+  currentCityData: PropTypes.array.isRequired,
+  citiesList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  cityName: PropTypes.string.isRequired,
+  initCityName: PropTypes.string.isRequired,
 };
