@@ -5,7 +5,7 @@ import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import PropertyScreen from '../property-screen/property-screen';
 import {appType} from './app-type';
-import {connect} from 'react-redux'; 
+import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 
 const url = `https://5.react.pages.academy/six-cities/hotels`;
@@ -24,8 +24,14 @@ const App = (props) => {
   } = props;
 
   let promise = fetch(url);
-  promise.then(response => response.ok ? response.json() : console.error('Problem with response. Status code: ' + response.status))
-  .then(result => {
+  promise.then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error(`Problem with response. Status code: ${response.status}`);
+    }
+  })
+  .then((result) => {
     result.forEach((item) => {
       if (citiesList.includes(item.city.name)) {
         return;
@@ -38,10 +44,20 @@ const App = (props) => {
     citiesList.forEach((city) => {
       result.forEach((item) => {
         if (item.city.name === city) {
+          for (let key in item) {
+            if (item.hasOwnProperty(key)) {
+              let newKey = key;
+              if (key.indexOf(`_`) > -1) {
+                newKey = key.replace(`_`, ``);
+                item[newKey] = item[key];
+                delete item[key];
+              }
+            }
+          }
           citiesData[item.city.name].push(item);
         }
-      })
-    })
+      });
+    });
 
     getCitiesList(citiesList);
     getCitiesData(citiesData);
@@ -49,7 +65,7 @@ const App = (props) => {
     getInitCityName(citiesList[0]);
     setLoading();
 
-  }).catch(err => console.error(err));
+  }).catch(alert);
 
   return (
     <BrowserRouter>
@@ -79,7 +95,7 @@ const App = (props) => {
 
 App.propTypes = appType;
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   getCitiesData(cities) {

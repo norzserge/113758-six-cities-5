@@ -8,7 +8,12 @@ class PlaceCard extends PureComponent {
   }
 
   render() {
-    const {onPlace, place, className} = this.props;
+    const {
+      // onPlace,
+      place,
+      className
+    } = this.props;
+
     const setArticleClassName = (classname) => {
       switch (classname) {
         case `near-places`: return `near-places__card`;
@@ -20,16 +25,16 @@ class PlaceCard extends PureComponent {
     return (
       <article
         className={`${setArticleClassName(className)} place-card`}
-        onMouseEnter={() => onPlace(place)}
+        // onMouseEnter={() => onPlace(place)}
       >
-        {place.is_premium && (
+        {place.ispremium && (
           <div className="place-card__mark">
             <span>Premium</span>
           </div>
         )}
         <div className={`${className}__image-wrapper place-card__image-wrapper`}>
           <Link to='/offer/1'>
-            <img className="place-card__image" src={place.preview_image} width="260" height="200" alt="Place image" />
+            <img className="place-card__image" src={place.previewimage} width="260" height="200" alt="Place image" />
           </Link>
         </div>
         <div className="place-card__info">

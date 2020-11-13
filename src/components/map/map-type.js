@@ -5,7 +5,7 @@ export const mapType = {
     city: PropTypes.shape({
       location: PropTypes.shape({
         latitude: PropTypes.number.isRequired,
-        longitude: PropTypes.number.isRequired,  
+        longitude: PropTypes.number.isRequired,
       }).isRequired,
       zoom: PropTypes.number,
     }).isRequired,

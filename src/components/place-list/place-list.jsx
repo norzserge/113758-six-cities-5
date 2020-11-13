@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {placeListType} from './placeListType';
 import PlaceCard from '../place-card/place-card';
 import PlaceCardCities from '../../proxy-components/place-card-cities/place-card-cities';
@@ -12,21 +12,39 @@ const PlaceList = (props) => {
     isLoading,
   } = props;
 
-  const [currentPlace, setCurrentPlace] = useState({});
+  // const [currentPlace, setCurrentPlace] = useState({});
 
   const getPlaceCardByType = (placeType, offer) => {
     switch (placeType) {
       case `cities`:
-        return (<PlaceCardCities place={offer} key={offer.id} onPlace={(offer) => setCurrentPlace(offer)} />);
+        return (
+          <PlaceCardCities
+            place={offer}
+            key={offer.id}
+            // onPlace={(offer) => setCurrentPlace(offer)}
+          />
+        );
       case `near`:
-        return (<PlaceCardNear place={offer} key={offer.id} onPlace={(offer) => setCurrentPlace(offer)} />);
+        return (
+          <PlaceCardNear
+            place={offer}
+            key={offer.id}
+            // onPlace={(offer) => setCurrentPlace(offer)}
+          />
+        );
       default:
-        return (<PlaceCard place={offer} key={offer.id} onPlace={(offer) => setCurrentPlace(offer)} />);
+        return (
+          <PlaceCard
+            place={offer}
+            key={offer.id}
+            // onPlace={(offer) => setCurrentPlace(offer)}
+          />
+        );
     }
   };
 
-  return isLoading ? 'Loading...' : currentCityData.map((offer) => getPlaceCardByType(type, offer));
-}
+  return isLoading ? `Loading...` : currentCityData.map((offer) => getPlaceCardByType(type, offer));
+};
 
 PlaceList.propTypes = placeListType;
 

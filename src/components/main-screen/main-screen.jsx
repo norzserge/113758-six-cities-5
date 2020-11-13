@@ -3,7 +3,7 @@ import PlaceList from '../place-list/place-list';
 import {mainScreenType} from './main-screen-type';
 import Map from '../map/map';
 import CitiesList from '../cities-list/cities-list';
-import {connect} from 'react-redux'; 
+import {connect} from 'react-redux';
 
 const MainScreen = (props) => {
   const {

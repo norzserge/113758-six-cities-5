@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from "react";
 import {mapType} from "./map-type";
 import leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
-import {connect} from 'react-redux'; 
+import {connect} from 'react-redux';
 
 const Map = (props) => {
   const {currentCityData} = props;
@@ -11,8 +11,16 @@ const Map = (props) => {
   let cityLongitude = 0;
   let cityZoom = 13;
 
+  /* Code below fix LeafLet bug 'Map container is already initialized'
+  I use for...in loop because eslint throws error when use '_leaflet_id' as key of mapRef.current */
   if (mapRef.current !== undefined && mapRef.current !== null) {
-    mapRef.current._leaflet_id = null;
+    for (let key in mapRef.current) {
+      if (mapRef.current.hasOwnProperty(key)) {
+        if (key.indexOf(`_leaflet_id`) > -1) {
+          mapRef.current[key] = null;
+        }
+      }
+    }
   }
 
   useEffect(() => {
@@ -57,7 +65,7 @@ const Map = (props) => {
   return (
     <div id="map" ref={mapRef} style={{height: `100%`}}></div>
   );
-}
+};
 
 Map.propTypes = mapType;
 

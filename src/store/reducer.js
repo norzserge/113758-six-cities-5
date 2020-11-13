@@ -24,18 +24,18 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         currentCityData: action.payload,
       });
-    case ActionType.GET_CITY_NAME: 
+    case ActionType.GET_CITY_NAME:
       return extend(state, {
         cityName: action.payload,
-      }); 
-    case ActionType.GET_INIT_CITY_NAME: 
+      });
+    case ActionType.GET_INIT_CITY_NAME:
       return extend(state, {
         initCityName: action.payload,
-      }); 
+      });
     case ActionType.IS_LOADING:
       return extend(state, {
         isLoading: false,
-      })
+      });
   }
 
   return state;
