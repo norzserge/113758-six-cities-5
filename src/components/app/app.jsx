@@ -7,9 +7,8 @@ import PropertyScreen from '../property-screen/property-screen';
 import {appType} from './app-type';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
-import {URL} from '../../const';
+import {mockData} from '../../mocks/cities-hotels-data.mock';
 
-const url = URL;
 let citiesData = {};
 let citiesList = [];
 
@@ -24,49 +23,38 @@ const App = (props) => {
     setLoading,
   } = props;
 
-  let promise = fetch(url);
-  promise.then((response) => {
-    if (response.ok) {
-      return response.json();
+  mockData.forEach((item) => {
+    if (citiesList.includes(item.city.name)) {
+      return;
     } else {
-      throw new Error(`Problem with response. Status code: ${response.status}`);
+      citiesList.push(item.city.name);
+      citiesData[item.city.name] = [];
     }
-  })
-  .then((result) => {
-    result.forEach((item) => {
-      if (citiesList.includes(item.city.name)) {
-        return;
-      } else {
-        citiesList.push(item.city.name);
-        citiesData[item.city.name] = [];
-      }
-    });
+  });
 
-    citiesList.forEach((city) => {
-      result.forEach((item) => {
-        if (item.city.name === city) {
-          for (let key in item) {
-            if (item.hasOwnProperty(key)) {
-              let newKey = key;
-              if (key.indexOf(`_`) > -1) {
-                newKey = key.replace(`_`, ``);
-                item[newKey] = item[key];
-                delete item[key];
-              }
+  citiesList.forEach((city) => {
+    mockData.forEach((item) => {
+      if (item.city.name === city) {
+        for (let key in item) {
+          if (item.hasOwnProperty(key)) {
+            let newKey = key;
+            if (key.indexOf(`_`) > -1) {
+              newKey = key.replace(`_`, ``);
+              item[newKey] = item[key];
+              delete item[key];
             }
           }
-          citiesData[item.city.name].push(item);
         }
-      });
+        citiesData[item.city.name].push(item);
+      }
     });
+  });
 
-    getCitiesList(citiesList);
-    getCitiesData(citiesData);
-    getCurrentCityData(citiesData[citiesList[0]]);
-    getInitCityName(citiesList[0]);
-    setLoading();
-
-  }).catch(alert);
+  getCitiesList(citiesList);
+  getCitiesData(citiesData);
+  getCurrentCityData(citiesData[citiesList[0]]);
+  getInitCityName(citiesList[0]);
+  setLoading();
 
   return (
     <BrowserRouter>
