@@ -1,33 +1,48 @@
-import React, {PureComponent} from "react";
+import React, {useEffect, useRef} from "react";
 import {mapType} from "./map-type";
 import leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
+import {connect} from 'react-redux';
 
-class Map extends PureComponent {
-  constructor(props) {
-    super(props);
+const Map = (props) => {
+  const {currentCityData} = props;
+  const mapRef = useRef(null);
+  let cityLatitude = 0;
+  let cityLongitude = 0;
+  let cityZoom = 13;
+
+  /* Code below fix LeafLet bug 'Map container is already initialized'
+  I use for...in loop because eslint throws error when use '_leaflet_id' as key of mapRef.current */
+  if (mapRef.current !== undefined && mapRef.current !== null) {
+    for (let key in mapRef.current) {
+      if (mapRef.current.hasOwnProperty(key)) {
+        if (key.indexOf(`_leaflet_id`) > -1) {
+          mapRef.current[key] = null;
+        }
+      }
+    }
   }
 
-  render() {
-    return (
-      <div id="map" style={{height: `100%`}}></div>
-    );
-  }
+  useEffect(() => {
+    if (Object.keys(currentCityData).length !== 0) {
+      cityLatitude = currentCityData[0].city.location.latitude;
+      cityLongitude = currentCityData[0].city.location.longitude;
+      cityZoom = currentCityData[0].city.location.zoom;
+    }
 
-  componentDidMount() {
-    const {offers} = this.props;
-    const city = [52.38333, 4.9];
+    const city = [cityLatitude, cityLongitude];
     const icon = leaflet.icon({
       iconUrl: `/img/pin.svg`,
       iconSize: [30, 40],
     });
-    const zoom = 12;
-    const map = leaflet.map(`map`, {
+    const zoom = cityZoom;
+    const map = leaflet.map(mapRef.current, {
       center: city,
       zoom,
       zoomControl: false,
       marker: true,
     });
+
     leaflet
       .tileLayer(
           `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`,
@@ -37,13 +52,27 @@ class Map extends PureComponent {
           }
       )
       .addTo(map);
+
     map.setView(city, zoom);
-    offers.forEach((offer) => {
-      leaflet.marker(offer.coordinate, {icon}).addTo(map);
-    });
-  }
-}
+
+    if (Object.keys(currentCityData).length !== 0) {
+      currentCityData.forEach((data) => {
+        leaflet.marker([data.location.latitude, data.location.longitude], {icon}).addTo(map);
+      });
+    }
+  }, [currentCityData]);
+
+  return (
+    <div id="map" ref={mapRef} style={{height: `100%`}}></div>
+  );
+};
 
 Map.propTypes = mapType;
 
-export default Map;
+const mapStateToProps = (state) => ({
+  currentCityData: state.currentCityData,
+});
+
+export {Map};
+
+export default connect(mapStateToProps)(Map);

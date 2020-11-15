@@ -1,22 +1,13 @@
 import PropTypes from 'prop-types';
 
 export const mapType = {
-  offers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    roomType: PropTypes.string.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    rating: PropTypes.number.isRequired,
-    photo: PropTypes.string.isRequired,
-    bedroomCount: PropTypes.number.isRequired,
-    maxAdults: PropTypes.number.isRequired,
-    coordinate: PropTypes.arrayOf(PropTypes.number).isRequired,
-    insideRoom: PropTypes.arrayOf(PropTypes.string).isRequired,
-    owner: PropTypes.shape({
-      photo: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
+  currentCityData: PropTypes.arrayOf(PropTypes.shape({
+    city: PropTypes.shape({
+      location: PropTypes.shape({
+        latitude: PropTypes.number.isRequired,
+        longitude: PropTypes.number.isRequired,
+      }).isRequired,
+      zoom: PropTypes.number,
     }).isRequired,
   }).isRequired).isRequired,
 };
