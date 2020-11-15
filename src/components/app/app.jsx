@@ -7,8 +7,9 @@ import PropertyScreen from '../property-screen/property-screen';
 import {appType} from './app-type';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
+import {URL} from '../../const';
 
-const url = `https://5.react.pages.academy/six-cities/hotels`;
+const url = URL;
 let citiesData = {};
 let citiesList = [];
 

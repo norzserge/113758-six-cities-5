@@ -1,30 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import {citiesListType} from './cities-list-type';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 
 const CitiesList = (props) => {
-  const {offersNew, citiesList, getCurrentCityData, getCityName} = props;
+  const {offersNew, citiesList, getCurrentCityData} = props;
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  useEffect(() => {
-    const initActiveTab = document.querySelector(`.tabs__item`);
-    if (initActiveTab) {
-      initActiveTab.classList.add(`tabs__item--active`);
-    }
-  }, [citiesList]);
-
-  const tabHandleClick = (cityName, event) => {
-    let tabs = document.querySelectorAll(`.tabs__item`);
-    let currentTab = event.target.closest(`.locations__item-link`);
-
+  const tabHandleClick = (cityName, index) => {
+    setActiveIndex(index);
     getCurrentCityData(cityName);
-    getCityName(currentTab.dataset.city);
-
-    for (let tab of tabs) {
-      tab.classList.remove(`tabs__item--active`);
-    }
-
-    currentTab.classList.add(`tabs__item--active`);
   };
 
   return (
@@ -36,9 +21,8 @@ const CitiesList = (props) => {
             key={`${cityName}-${index}`}
           >
             <a
-              className="locations__item-link tabs__item"
-              onClick={() => tabHandleClick(offersNew[cityName], event)}
-              data-city={cityName}
+              className={`locations__item-link tabs__item ${activeIndex === index ? `tabs__item--active` : ``}`}
+              onClick={() => tabHandleClick(offersNew[cityName], index)}
               href="#"
             >
               <span>{cityName}</span>
@@ -61,9 +45,6 @@ const mapDispatchToProps = (dispatch) => ({
   getCurrentCityData(currentCity) {
     dispatch(ActionCreator.getCurrentCityData(currentCity));
   },
-  getCityName(city) {
-    dispatch(ActionCreator.getCityName(city));
-  }
 });
 
 export {CitiesList};
