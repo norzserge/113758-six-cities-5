@@ -1,6 +1,8 @@
 import React, {PureComponent} from 'react';
 import {Link} from 'react-router-dom';
 import {placeCardType} from './place-card-type';
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/action';
 
 class PlaceCard extends PureComponent {
   constructor(props) {
@@ -9,9 +11,10 @@ class PlaceCard extends PureComponent {
 
   render() {
     const {
-      // onPlace,
       place,
-      className
+      className,
+      setActiveOfferId,
+      setInactiveOfferId,
     } = this.props;
 
     const setArticleClassName = (classname) => {
@@ -25,7 +28,8 @@ class PlaceCard extends PureComponent {
     return (
       <article
         className={`${setArticleClassName(className)} place-card`}
-        // onMouseEnter={() => onPlace(place)}
+        onMouseEnter={() => setActiveOfferId(place.id)}
+        onMouseLeave={() => setInactiveOfferId()}
       >
         {place.ispremium && (
           <div className="place-card__mark">
@@ -68,4 +72,15 @@ class PlaceCard extends PureComponent {
 
 PlaceCard.propTypes = placeCardType;
 
-export default PlaceCard;
+const mapDispatchToProps = (dispatch) => ({
+  setActiveOfferId(id) {
+    dispatch(ActionCreator.setActiveOfferId(id));
+  },
+  setInactiveOfferId() {
+    dispatch(ActionCreator.setInactiveOfferId());
+  },
+});
+
+export {PlaceCard};
+
+export default connect(null, mapDispatchToProps)(PlaceCard);

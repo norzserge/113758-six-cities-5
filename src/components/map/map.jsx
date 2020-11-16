@@ -5,11 +5,14 @@ import "leaflet/dist/leaflet.css";
 import {connect} from 'react-redux';
 
 const Map = (props) => {
-  const {currentCityData} = props;
+  const {currentCityData, activeOfferId} = props;
   const mapRef = useRef(null);
   let cityLatitude = 0;
   let cityLongitude = 0;
   let cityZoom = 13;
+  const MARKER_URL = `/img/pin.svg`;
+  const ACTIVE_MARKER_URL = `/img/pin-active.svg`;
+  const ICON_SIZE = [30, 40];
 
   /* Code below fix LeafLet bug 'Map container is already initialized'
   I use for...in loop because eslint throws error when use '_leaflet_id' as key of mapRef.current */
@@ -31,10 +34,16 @@ const Map = (props) => {
     }
 
     const city = [cityLatitude, cityLongitude];
+
     const icon = leaflet.icon({
-      iconUrl: `/img/pin.svg`,
-      iconSize: [30, 40],
+      iconUrl: MARKER_URL,
+      iconSize: ICON_SIZE,
     });
+    const activeIcon = leaflet.icon({
+      iconUrl: ACTIVE_MARKER_URL,
+      iconSize: ICON_SIZE,
+    });
+
     const zoom = cityZoom;
     const map = leaflet.map(mapRef.current, {
       center: city,
@@ -57,10 +66,13 @@ const Map = (props) => {
 
     if (Object.keys(currentCityData).length !== 0) {
       currentCityData.forEach((data) => {
-        leaflet.marker([data.location.latitude, data.location.longitude], {icon}).addTo(map);
+        icon.iconID = data.id;
+        leaflet.marker([data.location.latitude, data.location.longitude], {
+          icon: icon.iconID === activeOfferId ? activeIcon : icon,
+        }).addTo(map);
       });
     }
-  }, [currentCityData]);
+  }, [currentCityData, activeOfferId]);
 
   return (
     <div id="map" ref={mapRef} style={{height: `100%`}}></div>
@@ -71,6 +83,7 @@ Map.propTypes = mapType;
 
 const mapStateToProps = (state) => ({
   currentCityData: state.currentCityData,
+  activeOfferId: state.activeOfferId,
 });
 
 export {Map};
