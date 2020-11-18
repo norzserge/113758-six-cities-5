@@ -31,7 +31,7 @@ const Sort = (props) => {
   const getFilterValue = (index) => {
     setFilterValue(filterData[index].text);
     setFilterIndex(index);
-
+    setVisibility(!isVisible);
     switch (filterData[index].value) {
       case `popular`: return getFilteredCityData(filteredValues);
       case `to-high`: return getFilteredCityData(filteredValues.sort((a, b) => a.price - b.price));

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 
 const CitiesList = (props) => {
-  const {offersNew, citiesList, getCurrentCityData, setFilterValue, setFilterIndex} = props;
+  const {offersNew, citiesList, getCurrentCityData, setFilterValue, setFilterIndex, getCityName} = props;
   const [activeIndex, setActiveIndex] = useState(0);
 
   const tabHandleClick = (cityData, index) => {
@@ -12,6 +12,7 @@ const CitiesList = (props) => {
     getCurrentCityData(cityData);
     setFilterValue(`Popular`);
     setFilterIndex(0);
+    getCityName(cityData[0].city.name);
   };
 
   return (
@@ -52,6 +53,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setFilterIndex(index) {
     dispatch(ActionCreator.setFilterIndex(index));
+  },
+  getCityName(cityName) {
+    dispatch(ActionCreator.getCityName(cityName));
   },
 });
 
