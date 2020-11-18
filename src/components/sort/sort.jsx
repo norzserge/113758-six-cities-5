@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {sortType} from './sort-type';
 import {ActionCreator} from '../../store/action';
 import {connect} from 'react-redux';
@@ -20,7 +20,7 @@ const Sort = (props) => {
     setFilterIndex,
   } = props;
 
-  const dropDownRef = useRef(null);
+  const [isVisible, setVisibility] = useState(false);
   let filteredValues = currentCityData.map((item) => item);
 
   useEffect(() => {
@@ -31,8 +31,6 @@ const Sort = (props) => {
   const getFilterValue = (index) => {
     setFilterValue(filterData[index].text);
     setFilterIndex(index);
-
-    dropDownRef.current.classList.remove(`places__options--opened`);
 
     switch (filterData[index].value) {
       case `popular`: return getFilteredCityData(filteredValues);
@@ -49,14 +47,14 @@ const Sort = (props) => {
       <span
         className="places__sorting-type"
         tabIndex="0"
-        onClick={() => dropDownRef.current.classList.toggle(`places__options--opened`)}
+        onClick={() => setVisibility(!isVisible)}
       >
         {filterValue}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul ref={dropDownRef} className="places__options places__options--custom">
+      <ul className={`places__options places__options--custom ${isVisible ? `places__options--opened` : ``}`}>
         {
           filterData.map((item, index) => (
             <li

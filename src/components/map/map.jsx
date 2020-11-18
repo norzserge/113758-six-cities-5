@@ -14,19 +14,19 @@ const Map = (props) => {
   const ACTIVE_MARKER_URL = `/img/pin-active.svg`;
   const ICON_SIZE = [30, 40];
 
-  /* Code below fix LeafLet bug 'Map container is already initialized'
-  I use for...in loop because eslint throws error when use '_leaflet_id' as key of mapRef.current */
-  if (mapRef.current !== undefined && mapRef.current !== null) {
-    for (let key in mapRef.current) {
-      if (mapRef.current.hasOwnProperty(key)) {
-        if (key.indexOf(`_leaflet_id`) > -1) {
-          mapRef.current[key] = null;
+  useEffect(() => {
+    /* Code below fix LeafLet bug 'Map container is already initialized'
+    I use for...in loop because eslint throws error when use '_leaflet_id' as key of mapRef.current */
+    if (mapRef.current !== undefined && mapRef.current !== null) {
+      for (let key in mapRef.current) {
+        if (mapRef.current.hasOwnProperty(key)) {
+          if (key.indexOf(`_leaflet_id`) > -1) {
+            mapRef.current[key] = null;
+          }
         }
       }
     }
-  }
 
-  useEffect(() => {
     if (Object.keys(currentCityData).length !== 0) {
       cityLatitude = currentCityData[0].city.location.latitude;
       cityLongitude = currentCityData[0].city.location.longitude;
