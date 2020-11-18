@@ -8,48 +8,25 @@ import {connect} from 'react-redux';
 const PlaceList = (props) => {
   const {
     type,
-    currentCityData,
+    filteredCityData,
     isLoading,
   } = props;
 
-  // const [currentPlace, setCurrentPlace] = useState({});
-
   const getPlaceCardByType = (placeType, offer) => {
     switch (placeType) {
-      case `cities`:
-        return (
-          <PlaceCardCities
-            place={offer}
-            key={offer.id}
-            // onPlace={(offer) => setCurrentPlace(offer)}
-          />
-        );
-      case `near`:
-        return (
-          <PlaceCardNear
-            place={offer}
-            key={offer.id}
-            // onPlace={(offer) => setCurrentPlace(offer)}
-          />
-        );
-      default:
-        return (
-          <PlaceCard
-            place={offer}
-            key={offer.id}
-            // onPlace={(offer) => setCurrentPlace(offer)}
-          />
-        );
+      case `cities`: return (<PlaceCardCities place={offer} key={offer.id} />);
+      case `near`: return (<PlaceCardNear place={offer} key={offer.id} />);
+      default: return (<PlaceCard place={offer} key={offer.id} />);
     }
   };
 
-  return isLoading ? `Loading...` : currentCityData.map((offer) => getPlaceCardByType(type, offer));
+  return isLoading ? `Loading...` : filteredCityData.map((offer) => getPlaceCardByType(type, offer));
 };
 
 PlaceList.propTypes = placeListType;
 
 const mapStateToProps = (state) => ({
-  currentCityData: state.currentCityData,
+  filteredCityData: state.filteredCityData,
   isLoading: state.isLoading,
 });
 

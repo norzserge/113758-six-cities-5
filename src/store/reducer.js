@@ -7,7 +7,11 @@ const initialState = {
   citiesList: [],
   offersNew: {},
   currentCityData: [],
+  filteredCityData: [],
   isLoading: true,
+  filterValue: `Popular`,
+  filterIndex: 0,
+  activeOfferId: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -24,6 +28,10 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         currentCityData: action.payload,
       });
+    case ActionType.GET_FILTERED_CITY_DATA:
+      return extend(state, {
+        filteredCityData: action.payload,
+      });
     case ActionType.GET_CITY_NAME:
       return extend(state, {
         cityName: action.payload,
@@ -35,6 +43,22 @@ const reducer = (state = initialState, action) => {
     case ActionType.IS_LOADING:
       return extend(state, {
         isLoading: false,
+      });
+    case ActionType.SET_FILTER_VALUE:
+      return extend(state, {
+        filterValue: action.payload,
+      });
+    case ActionType.SET_FILTER_INDEX:
+      return extend(state, {
+        filterIndex: action.payload,
+      });
+    case ActionType.SET_ACTIVE_OFFER_ID:
+      return extend(state, {
+        activeOfferId: action.payload,
+      });
+    case ActionType.SET_INACTIVE_OFFER_ID:
+      return extend(state, {
+        activeOfferId: action.payload,
       });
   }
 
