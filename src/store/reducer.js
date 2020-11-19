@@ -10,7 +10,6 @@ const initialState = {
   filteredCityData: [],
   isLoading: true,
   filterValue: `Popular`,
-  filterIndex: 0,
   activeOfferId: null,
 };
 
@@ -27,6 +26,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.GET_CURRENT_CITY_DATA:
       return extend(state, {
         currentCityData: action.payload,
+        filterValue: `Popular`,
       });
     case ActionType.GET_FILTERED_CITY_DATA:
       return extend(state, {
