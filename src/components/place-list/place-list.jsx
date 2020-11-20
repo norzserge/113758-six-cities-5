@@ -1,36 +1,31 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {placeListType} from './placeListType';
 import PlaceCard from '../place-card/place-card';
 import PlaceCardCities from '../../proxy-components/place-card-cities/place-card-cities';
 import PlaceCardNear from '../../proxy-components/place-card-near/place-card-near';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
 
 const PlaceList = (props) => {
-  const {
-    type,
-    filteredCityData,
-    isLoading,
-    filterValue,
-    currentCityData,
-    getFilteredCityData,
-  } = props;
-
-  let filteredValues = currentCityData.map((item) => item);
+  const {type, isLoading, filterValue, currentCityData} = props;
+  const [filteredCityData, setFilteredCityData] = useState(currentCityData);
 
   useEffect(() => {
-    getFilteredCityData(filteredValues);
+    setFilteredCityData(currentCityData);
   }, [currentCityData]);
 
   useEffect(() => {
-    switch (filterValue) {
-      case `popular`: return getFilteredCityData(filteredValues);
-      case `to-high`: return getFilteredCityData(filteredValues.sort((a, b) => a.price - b.price));
-      case `to-low`: return getFilteredCityData(filteredValues.sort((a, b) => b.price - a.price));
-      case `top-rated`: return getFilteredCityData(filteredValues.sort((a, b) => b.rating - a.rating));
-      default: return getFilteredCityData(filteredValues);
-    }
+    filter(filterValue);
   }, [filterValue]);
+
+  const filter = (value) => {
+    switch (value) {
+      case `popular`: return setFilteredCityData(filteredCityData);
+      case `to-high`: return setFilteredCityData(filteredCityData.sort((a, b) => a.price - b.price));
+      case `to-low`: return setFilteredCityData(filteredCityData.sort((a, b) => b.price - a.price));
+      case `top-rated`: return setFilteredCityData(filteredCityData.sort((a, b) => b.rating - a.rating));
+      default: return setFilteredCityData(filteredCityData);
+    }
+  }
 
   const getPlaceCardByType = (placeType, offer) => {
     switch (placeType) {
@@ -46,18 +41,11 @@ const PlaceList = (props) => {
 PlaceList.propTypes = placeListType;
 
 const mapStateToProps = (state) => ({
-  filteredCityData: state.filteredCityData,
   isLoading: state.isLoading,
   filterValue: state.filterValue,
   currentCityData: state.currentCityData,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getFilteredCityData(filteredValues) {
-    dispatch(ActionCreator.getFilteredCityData(filteredValues));
-  },
-});
-
 export {PlaceList};
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlaceList);
+export default connect(mapStateToProps)(PlaceList);

@@ -20,13 +20,11 @@ const Sort = (props) => {
   const [currentFilterText, setCurrentFilterText] = useState(filterData[0].text);
 
   useEffect(() => {
-    switch (filterValue) {
-      case filterData[0].value: return setCurrentFilterText(filterData[0].text);
-      case filterData[1].value: return setCurrentFilterText(filterData[1].text);
-      case filterData[2].value: return setCurrentFilterText(filterData[2].text);
-      case filterData[3].value: return setCurrentFilterText(filterData[3].text);
-      default: return setCurrentFilterText(filterData[0].text);
-    }
+    filterData.filter((obj) => {
+      if (obj.value === filterValue) {
+        setCurrentFilterText(obj.text);
+      }
+    });
   }, [filterValue]);
 
   const onFilterClickHandler = (index) => {
