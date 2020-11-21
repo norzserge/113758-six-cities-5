@@ -13,19 +13,15 @@ const PlaceList = (props) => {
     setFilteredCityData(currentCityData);
   }, [currentCityData]);
 
-  useEffect(() => {
-    filter(filterValue);
-  }, [filterValue]);
-
   const filter = (value) => {
     switch (value) {
-      case `popular`: return setFilteredCityData(filteredCityData);
-      case `to-high`: return setFilteredCityData(filteredCityData.sort((a, b) => a.price - b.price));
-      case `to-low`: return setFilteredCityData(filteredCityData.sort((a, b) => b.price - a.price));
-      case `top-rated`: return setFilteredCityData(filteredCityData.sort((a, b) => b.rating - a.rating));
-      default: return setFilteredCityData(filteredCityData);
+      case `popular`: return filteredCityData;
+      case `to-high`: return filteredCityData.sort((a, b) => a.price - b.price);
+      case `to-low`: return filteredCityData.sort((a, b) => b.price - a.price);
+      case `top-rated`: return filteredCityData.sort((a, b) => b.rating - a.rating);
+      default: return filteredCityData;
     }
-  }
+  };
 
   const getPlaceCardByType = (placeType, offer) => {
     switch (placeType) {
@@ -35,7 +31,7 @@ const PlaceList = (props) => {
     }
   };
 
-  return isLoading ? `Loading...` : filteredCityData.map((offer) => getPlaceCardByType(type, offer));
+  return isLoading ? `Loading...` : filter(filterValue).map((offer) => getPlaceCardByType(type, offer));
 };
 
 PlaceList.propTypes = placeListType;
