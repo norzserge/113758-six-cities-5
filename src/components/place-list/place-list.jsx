@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {placeListType} from './placeListType';
 import PlaceCard from '../place-card/place-card';
 import PlaceCardCities from '../../proxy-components/place-card-cities/place-card-cities';
@@ -7,19 +7,14 @@ import {connect} from 'react-redux';
 
 const PlaceList = (props) => {
   const {type, isLoading, filterValue, currentCityData} = props;
-  const [filteredCityData, setFilteredCityData] = useState(currentCityData);
-
-  useEffect(() => {
-    setFilteredCityData(currentCityData);
-  }, [currentCityData]);
 
   const filter = (value) => {
     switch (value) {
-      case `popular`: return filteredCityData;
-      case `to-high`: return filteredCityData.sort((a, b) => a.price - b.price);
-      case `to-low`: return filteredCityData.sort((a, b) => b.price - a.price);
-      case `top-rated`: return filteredCityData.sort((a, b) => b.rating - a.rating);
-      default: return filteredCityData;
+      case `popular`: return currentCityData;
+      case `to-high`: return currentCityData.sort((a, b) => a.price - b.price);
+      case `to-low`: return currentCityData.sort((a, b) => b.price - a.price);
+      case `top-rated`: return currentCityData.sort((a, b) => b.rating - a.rating);
+      default: return currentCityData;
     }
   };
 
