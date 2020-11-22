@@ -8,6 +8,7 @@ import {appType} from './app-type';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import {mockData} from '../../mocks/cities-hotels-data.mock';
+import MainScreenEmpty from '../main-screen-empty/main-screen-empty';
 
 let citiesData = {};
 let citiesList = [];
@@ -22,6 +23,14 @@ const App = (props) => {
     getInitCityName,
     setLoading,
   } = props;
+
+  const getDataFromServer = (data) => {
+    if (data.length === 0) {
+      return (<MainScreenEmpty />);
+    } else {
+      return (<MainScreen citiesList={citiesList} />);
+    }
+  };
 
   mockData.forEach((item) => {
     if (citiesList.includes(item.city.name)) {
@@ -60,9 +69,7 @@ const App = (props) => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainScreen
-            citiesList={citiesList}
-          />
+          {getDataFromServer(mockData)}
         </Route>
         <Route exact path="/login">
           <LoginScreen />
