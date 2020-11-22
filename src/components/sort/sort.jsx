@@ -12,33 +12,24 @@ const filterData = [
 
 const Sort = (props) => {
   const {
-    currentCityData,
-    getFilteredCityData,
     filterValue,
     setFilterValue,
-    filterIndex,
-    setFilterIndex,
   } = props;
 
   const [isVisible, setVisibility] = useState(false);
-  let filteredValues = currentCityData.map((item) => item);
+  const [currentFilterText, setCurrentFilterText] = useState(filterData[0].text);
 
   useEffect(() => {
-    getFilteredCityData(filteredValues);
-    filteredValues = currentCityData.map((item) => item);
-  }, [currentCityData]);
+    filterData.filter((obj) => {
+      if (obj.value === filterValue) {
+        setCurrentFilterText(obj.text);
+      }
+    });
+  }, [filterValue]);
 
-  const getFilterValue = (index) => {
-    setFilterValue(filterData[index].text);
-    setFilterIndex(index);
-
-    switch (filterData[index].value) {
-      case `popular`: return getFilteredCityData(filteredValues);
-      case `to-high`: return getFilteredCityData(filteredValues.sort((a, b) => a.price - b.price));
-      case `to-low`: return getFilteredCityData(filteredValues.sort((a, b) => b.price - a.price));
-      case `top-rated`: return getFilteredCityData(filteredValues.sort((a, b) => b.rating - a.rating));
-      default: return getFilteredCityData(filteredValues);
-    }
+  const onFilterClickHandler = (index) => {
+    setFilterValue(filterData[index].value);
+    setVisibility(!isVisible);
   };
 
   return (
@@ -49,7 +40,7 @@ const Sort = (props) => {
         tabIndex="0"
         onClick={() => setVisibility(!isVisible)}
       >
-        {filterValue}
+        {currentFilterText}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -58,11 +49,11 @@ const Sort = (props) => {
         {
           filterData.map((item, index) => (
             <li
-              className={`places__option ${filterIndex === index ? `places__option--active` : ``}`}
+              className={`places__option ${filterValue === item.value ? `places__option--active` : ``}`}
               tabIndex="0"
               key={`${item.value}-${index}`}
               data-value={item.value}
-              onClick={() => getFilterValue(index)}
+              onClick={() => onFilterClickHandler(index)}
             >
               {item.text}
             </li>
@@ -76,20 +67,12 @@ const Sort = (props) => {
 Sort.propTypes = sortType;
 
 const mapStateToProps = (state) => ({
-  currentCityData: state.currentCityData,
   filterValue: state.filterValue,
-  filterIndex: state.filterIndex,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getFilteredCityData(filteredValues) {
-    dispatch(ActionCreator.getFilteredCityData(filteredValues));
-  },
   setFilterValue(value) {
     dispatch(ActionCreator.setFilterValue(value));
-  },
-  setFilterIndex(index) {
-    dispatch(ActionCreator.setFilterIndex(index));
   },
 });
 

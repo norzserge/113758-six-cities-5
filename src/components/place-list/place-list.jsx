@@ -6,11 +6,17 @@ import PlaceCardNear from '../../proxy-components/place-card-near/place-card-nea
 import {connect} from 'react-redux';
 
 const PlaceList = (props) => {
-  const {
-    type,
-    filteredCityData,
-    isLoading,
-  } = props;
+  const {type, isLoading, filterValue, currentCityData} = props;
+
+  const filter = (value) => {
+    switch (value) {
+      case `popular`: return currentCityData;
+      case `to-high`: return currentCityData.sort((a, b) => a.price - b.price);
+      case `to-low`: return currentCityData.sort((a, b) => b.price - a.price);
+      case `top-rated`: return currentCityData.sort((a, b) => b.rating - a.rating);
+      default: return currentCityData;
+    }
+  };
 
   const getPlaceCardByType = (placeType, offer) => {
     switch (placeType) {
@@ -20,14 +26,15 @@ const PlaceList = (props) => {
     }
   };
 
-  return isLoading ? `Loading...` : filteredCityData.map((offer) => getPlaceCardByType(type, offer));
+  return isLoading ? `Loading...` : filter(filterValue).map((offer) => getPlaceCardByType(type, offer));
 };
 
 PlaceList.propTypes = placeListType;
 
 const mapStateToProps = (state) => ({
-  filteredCityData: state.filteredCityData,
   isLoading: state.isLoading,
+  filterValue: state.filterValue,
+  currentCityData: state.currentCityData,
 });
 
 export {PlaceList};

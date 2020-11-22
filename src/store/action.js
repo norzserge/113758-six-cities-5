@@ -33,20 +33,12 @@ export const ActionCreator = {
     type: ActionType.GET_CURRENT_CITY_DATA,
     payload: currentCity,
   }),
-  getFilteredCityData: (filteredValues) => ({
-    type: ActionType.GET_FILTERED_CITY_DATA,
-    payload: filteredValues,
-  }),
   setLoading: () => ({
     type: ActionType.IS_LOADING,
   }),
   setFilterValue: (value) => ({
     type: ActionType.SET_FILTER_VALUE,
     payload: value,
-  }),
-  setFilterIndex: (index) => ({
-    type: ActionType.SET_FILTER_INDEX,
-    payload: index,
   }),
   setActiveOfferId: (id) => ({
     type: ActionType.SET_ACTIVE_OFFER_ID,

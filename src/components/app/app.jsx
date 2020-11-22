@@ -19,7 +19,6 @@ const App = (props) => {
     getCitiesData,
     getCitiesList,
     getCurrentCityData,
-    getFilteredCityData,
     getInitCityName,
     setLoading,
   } = props;
@@ -54,7 +53,6 @@ const App = (props) => {
   getCitiesList(citiesList);
   getCitiesData(citiesData);
   getCurrentCityData(citiesData[citiesList[0]]);
-  getFilteredCityData(citiesData[citiesList[0]]);
   getInitCityName(citiesList[0]);
   setLoading();
 
@@ -97,9 +95,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   getCurrentCityData(city) {
     dispatch(ActionCreator.getCurrentCityData(city));
-  },
-  getFilteredCityData(filteredValues) {
-    dispatch(ActionCreator.getFilteredCityData(filteredValues));
   },
   getInitCityName(city) {
     dispatch(ActionCreator.getInitCityName(city));
