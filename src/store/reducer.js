@@ -10,6 +10,7 @@ const initialState = {
   isLoading: true,
   filterValue: `popular`,
   activeOfferId: null,
+  dataFromServer: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -50,6 +51,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.SET_INACTIVE_OFFER_ID:
       return extend(state, {
         activeOfferId: action.payload,
+      });
+    case ActionType.GET_DATA_FROM_SERVER:
+      return extend(state, {
+        dataFromServer: action.payload,
       });
   }
 

@@ -7,13 +7,14 @@ import {connect} from 'react-redux';
 
 const PlaceList = (props) => {
   const {type, isLoading, filterValue, currentCityData} = props;
+  const filteredData = currentCityData.map((item) => item);
 
   const filter = (value) => {
     switch (value) {
       case `popular`: return currentCityData;
-      case `to-high`: return currentCityData.sort((a, b) => a.price - b.price);
-      case `to-low`: return currentCityData.sort((a, b) => b.price - a.price);
-      case `top-rated`: return currentCityData.sort((a, b) => b.rating - a.rating);
+      case `to-high`: return filteredData.sort((a, b) => a.price - b.price);
+      case `to-low`: return filteredData.sort((a, b) => b.price - a.price);
+      case `top-rated`: return filteredData.sort((a, b) => b.rating - a.rating);
       default: return currentCityData;
     }
   };

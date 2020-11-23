@@ -8,4 +8,5 @@ export const appType = {
   getCurrentCityData: PropTypes.func.isRequired,
   getInitCityName: PropTypes.func.isRequired,
   setLoading: PropTypes.func.isRequired,
+  dataFromServer: PropTypes.array.isRequired,
 };

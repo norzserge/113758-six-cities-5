@@ -7,7 +7,6 @@ import PropertyScreen from '../property-screen/property-screen';
 import {appType} from './app-type';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
-import {mockData} from '../../mocks/cities-hotels-data.mock';
 import MainScreenEmpty from '../main-screen-empty/main-screen-empty';
 
 let citiesData = {};
@@ -22,6 +21,7 @@ const App = (props) => {
     getCurrentCityData,
     getInitCityName,
     setLoading,
+    dataFromServer,
   } = props;
 
   const getDataFromServer = (data) => {
@@ -32,7 +32,7 @@ const App = (props) => {
     }
   };
 
-  mockData.forEach((item) => {
+  dataFromServer.forEach((item) => {
     if (citiesList.includes(item.city.name)) {
       return;
     } else {
@@ -42,7 +42,7 @@ const App = (props) => {
   });
 
   citiesList.forEach((city) => {
-    mockData.forEach((item) => {
+    dataFromServer.forEach((item) => {
       if (item.city.name === city) {
         for (let key in item) {
           if (item.hasOwnProperty(key)) {
@@ -69,7 +69,7 @@ const App = (props) => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          {getDataFromServer(mockData)}
+          {getDataFromServer(dataFromServer)}
         </Route>
         <Route exact path="/login">
           <LoginScreen />
@@ -91,7 +91,9 @@ const App = (props) => {
 
 App.propTypes = appType;
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  dataFromServer: state.dataFromServer,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   getCitiesData(cities) {

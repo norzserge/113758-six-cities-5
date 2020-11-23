@@ -10,6 +10,7 @@ export const ActionType = {
   SET_FILTER_INDEX: `SET_FILTER_INDEX`,
   SET_ACTIVE_OFFER_ID: `SET_ACTIVE_OFFER_ID`,
   SET_INACTIVE_OFFER_ID: `SET_INACTIVE_OFFER_ID`,
+  GET_DATA_FROM_SERVER: `GET_DATA_FROM_SERVER`,
 };
 
 export const ActionCreator = {
@@ -49,3 +50,8 @@ export const ActionCreator = {
     payload: null,
   }),
 };
+
+export const getDataFromServer = (data) => ({
+  type: ActionType.GET_DATA_FROM_SERVER,
+  payload: data,
+});
