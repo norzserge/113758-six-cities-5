@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {citiesListType} from './cities-list-type';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
+import {selectOffersNew, selectCitiesList} from '../../store/selectors';
 
 const CitiesList = (props) => {
   const {offersNew, citiesList, getCurrentCityData, getCityName} = props;
@@ -38,8 +39,8 @@ const CitiesList = (props) => {
 CitiesList.propTypes = citiesListType;
 
 const mapStateToProps = (state) => ({
-  offersNew: state.offersNew,
-  citiesList: state.citiesList,
+  offersNew: selectOffersNew(state),
+  citiesList: selectCitiesList(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

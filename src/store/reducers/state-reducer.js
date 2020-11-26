@@ -1,5 +1,5 @@
-import {ActionType} from './action';
-import {extend} from '../utils';
+import {ActionType} from '../action';
+import {extend} from '../../utils';
 
 const initialState = {
   initCityName: ``,
@@ -10,10 +10,9 @@ const initialState = {
   isLoading: true,
   filterValue: `popular`,
   activeOfferId: null,
-  dataFromServer: [],
 };
 
-const reducer = (state = initialState, action) => {
+const stateReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.GET_CITIES_DATA:
       return extend(state, {
@@ -52,13 +51,9 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         activeOfferId: action.payload,
       });
-    case ActionType.GET_DATA_FROM_SERVER:
-      return extend(state, {
-        dataFromServer: action.payload,
-      });
   }
 
   return state;
 };
 
-export {reducer};
+export {stateReducer};

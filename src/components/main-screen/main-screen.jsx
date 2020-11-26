@@ -5,6 +5,7 @@ import Map from '../map/map';
 import Sort from '../sort/sort';
 import CitiesList from '../cities-list/cities-list';
 import {connect} from 'react-redux';
+import {selectCurrentCityData, selectCityName, selectInitCityName} from '../../store/selectors';
 
 const MainScreen = (props) => {
   const {
@@ -82,9 +83,9 @@ const MainScreen = (props) => {
 MainScreen.propTypes = mainScreenType;
 
 const mapStateToProps = (state) => ({
-  currentCityData: state.currentCityData,
-  cityName: state.cityName,
-  initCityName: state.initCityName,
+  currentCityData: selectCurrentCityData(state),
+  cityName: selectCityName(state),
+  initCityName: selectInitCityName(state),
 });
 
 export {CitiesList};

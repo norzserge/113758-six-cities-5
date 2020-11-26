@@ -8,6 +8,7 @@ import {appType} from './app-type';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import MainScreenEmpty from '../main-screen-empty/main-screen-empty';
+import {selectDataFromServer} from '../../store/selectors';
 
 let citiesData = {};
 let citiesList = [];
@@ -92,7 +93,7 @@ const App = (props) => {
 App.propTypes = appType;
 
 const mapStateToProps = (state) => ({
-  dataFromServer: state.dataFromServer,
+  dataFromServer: selectDataFromServer(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

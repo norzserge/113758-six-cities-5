@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {sortType} from './sort-type';
 import {ActionCreator} from '../../store/action';
 import {connect} from 'react-redux';
+import {selectFilterValue} from '../../store/selectors';
 
 const filterData = [
   {text: `Popular`, value: `popular`},
@@ -67,7 +68,7 @@ const Sort = (props) => {
 Sort.propTypes = sortType;
 
 const mapStateToProps = (state) => ({
-  filterValue: state.filterValue,
+  filterValue: selectFilterValue(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

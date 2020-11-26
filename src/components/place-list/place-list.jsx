@@ -4,20 +4,10 @@ import PlaceCard from '../place-card/place-card';
 import PlaceCardCities from '../../proxy-components/place-card-cities/place-card-cities';
 import PlaceCardNear from '../../proxy-components/place-card-near/place-card-near';
 import {connect} from 'react-redux';
+import {selectIsLoading, selectFilteredOffers} from '../../store/selectors';
 
 const PlaceList = (props) => {
-  const {type, isLoading, filterValue, currentCityData} = props;
-  const filteredData = currentCityData.map((item) => item);
-
-  const filter = (value) => {
-    switch (value) {
-      case `popular`: return currentCityData;
-      case `to-high`: return filteredData.sort((a, b) => a.price - b.price);
-      case `to-low`: return filteredData.sort((a, b) => b.price - a.price);
-      case `top-rated`: return filteredData.sort((a, b) => b.rating - a.rating);
-      default: return currentCityData;
-    }
-  };
+  const {type, isLoading, filter} = props;
 
   const getPlaceCardByType = (placeType, offer) => {
     switch (placeType) {
@@ -27,15 +17,14 @@ const PlaceList = (props) => {
     }
   };
 
-  return isLoading ? `Loading...` : filter(filterValue).map((offer) => getPlaceCardByType(type, offer));
+  return isLoading ? `Loading...` : filter.map((offer) => getPlaceCardByType(type, offer));
 };
 
 PlaceList.propTypes = placeListType;
 
 const mapStateToProps = (state) => ({
-  isLoading: state.isLoading,
-  filterValue: state.filterValue,
-  currentCityData: state.currentCityData,
+  isLoading: selectIsLoading(state),
+  filter: selectFilteredOffers(state),
 });
 
 export {PlaceList};
